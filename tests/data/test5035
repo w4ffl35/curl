@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<testcase>
+<info>
+<keywords>
+unittest
+FTP
+wildcardmatch
+ftplistparser
+</keywords>
+</info>
+
+<client>
+<features>
+unittest
+ftp
+</features>
+<name>
+FTP wildcard LIST failure must not keep listing parser write callback
+</name>
+</client>
+</testcase>
