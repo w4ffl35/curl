@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<testcase>
+<info>
+<keywords>
+TFTP
+TFTP RRQ
+TFTP WRQ
+libtest
+</keywords>
+</info>
+
+<reply>
+</reply>
+
+<client>
+<tool>
+lib5036
+</tool>
+<features>
+tftp
+</features>
+<name>
+TFTP rejects wrong-direction opening packet (CVE-2026-92389)
+</name>
+<command>
+tftp://%HOSTIP/%TESTNUMBER
+</command>
+</client>
+
+<verify>
+<stdout>
+TFTP wrong-direction opening packets rejected
+</stdout>
+</verify>
+</testcase>
