@@ -15,4 +15,10 @@ unittest
 CVE-2026-92391 deeply nested MIME frees without stack exhaustion
 </name>
 </client>
+<verify>
+<limits>
+Allocations: 250000
+Maximum allocated: 60000000
+</limits>
+</verify>
 </testcase>
