@@ -115,5 +115,5 @@ TESTS_C = \
   unit3400.c \
   unit4781.c \
   unit4782.c \
-  unit4783.c \
+  unit5034.c \
   unit5035.c

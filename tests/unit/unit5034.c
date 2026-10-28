@@ -33,16 +33,16 @@
    curl_mime_free() releases nested subparts iteratively, so freeing an
    arbitrarily deep chain must simply work. The depth here far exceeds
    what any recursive cleanup could survive on a default 8MB stack. */
-#define T4783_DEPTH 100000
+#define T5034_DEPTH 100000
 
-static CURLcode t4783_setup(void)
+static CURLcode t5034_setup(void)
 {
   CURLcode result = CURLE_OK;
   global_init(CURL_GLOBAL_ALL);
   return result;
 }
 
-static void t4783_stop(CURL *easy, curl_mime *mime)
+static void t5034_stop(CURL *easy, curl_mime *mime)
 {
   curl_mime_free(mime);
   if(easy)
@@ -50,7 +50,7 @@ static void t4783_stop(CURL *easy, curl_mime *mime)
   curl_global_cleanup();
 }
 
-static CURLcode test_unit4783(const char *arg)
+static CURLcode test_unit5034(const char *arg)
 {
   CURL *easy = NULL;
   curl_mime *top = NULL;
@@ -58,7 +58,7 @@ static CURLcode test_unit4783(const char *arg)
   curl_mimepart *leaf;
   size_t i;
 
-  UNITTEST_BEGIN(t4783_setup())
+  UNITTEST_BEGIN(t5034_setup())
 
   easy = curl_easy_init();
   abort_unless(easy, "curl_easy_init()");
@@ -68,7 +68,7 @@ static CURLcode test_unit4783(const char *arg)
 
   /* Chain single-part levels: each new submime hangs off the previous
      level's only part, using only the public API. */
-  for(i = 0; i < T4783_DEPTH; i++) {
+  for(i = 0; i < T5034_DEPTH; i++) {
     curl_mimepart *part = curl_mime_addpart(mime);
     curl_mime *sub;
     abort_unless(part, "curl_mime_addpart()");
@@ -97,12 +97,12 @@ static CURLcode test_unit4783(const char *arg)
   curl_mime_free(top);
   top = NULL;
 
-  UNITTEST_END(t4783_stop(easy, top))
+  UNITTEST_END(t5034_stop(easy, top))
 }
 
 #else /* mime disabled */
 
-static CURLcode test_unit4783(const char *arg)
+static CURLcode test_unit5034(const char *arg)
 {
   UNITTEST_BEGIN_SIMPLE
   puts("nothing to do when mime is disabled");
