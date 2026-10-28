@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<testcase>
+<info>
+<keywords>
+unittest
+mime
+</keywords>
+</info>
+
+<client>
+<features>
+unittest
+</features>
+<name>
+CVE-2026-92391 deeply nested MIME frees without stack exhaustion
+</name>
+</client>
+</testcase>
