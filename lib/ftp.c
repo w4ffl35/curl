@@ -4070,8 +4070,12 @@ static CURLcode wc_statemach(struct Curl_easy *data,
         continue;
       }
       if(Curl_llist_count(&wildcard->filelist) == 0) {
-        /* no corresponding file */
-        wildcard->state = CURLWC_CLEAN;
+        /* no corresponding file, restore user callbacks */
+        if(wildcard->dtor) {
+          wildcard->dtor(wildcard->ftpwc);
+          wildcard->ftpwc = NULL;
+        }
+        wildcard->state = CURLWC_ERROR;
         return CURLE_REMOTE_FILE_NOT_FOUND;
       }
       continue;
@@ -4276,6 +4280,15 @@ static CURLcode ftp_do(struct Curl_easy *data, bool *done)
   }
 
   result = ftp_regular_transfer(data, ftpc, ftp, done);
+  if(result && data->state.wildcardmatch && data->wildcard &&
+     data->wildcard->state == CURLWC_MATCHING) {
+    struct WildcardData *wc = data->wildcard;
+    if(wc->dtor && wc->ftpwc) {
+      wc->dtor(wc->ftpwc);
+      wc->ftpwc = NULL;
+    }
+    wc->state = CURLWC_ERROR;
+  }
 
   return result;
 }

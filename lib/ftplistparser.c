@@ -1030,7 +1030,10 @@ bool Curl_ftp_listmode(struct Curl_easy *data)
 {
   if(data->state.wildcardmatch) {
     struct WildcardData * const wildcard = data->wildcard;
-    return wildcard && (wildcard->state == CURLWC_MATCHING);
+    if(wildcard && (wildcard->state == CURLWC_MATCHING)) {
+      struct ftp_wc *ftpwc = wildcard->ftpwc;
+      return ftpwc && ftpwc->parser;
+    }
   }
   return FALSE;
 }
